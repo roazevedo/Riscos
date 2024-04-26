@@ -10,9 +10,90 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_26_023453) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_26_030146) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "controles", force: :cascade do |t|
+    t.string "nome"
+    t.string "controle_novo_ou_modificado"
+    t.string "tipo_de_controle"
+    t.string "natureza_do_controle"
+    t.string "classificação_controle_quanto_ao_risco"
+    t.string "tipo_de_ação"
+    t.string "responsável_pela_ação"
+    t.string "como_implantar_controle"
+    t.string "macroetapas_de_implantação"
+    t.date "data_prevista_início"
+    t.date "data_prevista_conclusão"
+    t.date "data_real_conclusão"
+    t.string "órgãos_setores_envolvidos"
+    t.string "análise_EGR"
+    t.bigint "risco_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["risco_id"], name: "index_controles_on_risco_id"
+  end
+
+  create_table "planos", force: :cascade do |t|
+    t.string "título_etapa"
+    t.string "descrição_etapa"
+    t.string "responsável_pela_implementação"
+    t.string "órgãos_setores_envolvidos"
+    t.string "recursos_necessários_para_implementação"
+    t.date "data_início_etapa"
+    t.date "data_final_implementação"
+    t.boolean "gerará_produto"
+    t.string "qual_produto_gerado"
+    t.bigint "controle_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["controle_id"], name: "index_planos_on_controle_id"
+  end
+
+  create_table "processos", force: :cascade do |t|
+    t.string "nome"
+    t.string "órgão_1"
+    t.string "órgão_2"
+    t.string "gestor_processo_1"
+    t.string "gestor_processo_2"
+    t.string "servidor_responsável"
+    t.string "objetivo_estratégico_associado"
+    t.string "embasamento_legal"
+    t.string "sistemas_utilizados"
+    t.string "partes_interessadas"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "riscos", force: :cascade do |t|
+    t.string "nome"
+    t.date "data_identificação"
+    t.string "tipo_de_risco"
+    t.string "associação_do_risco"
+    t.string "causas"
+    t.string "consequências"
+    t.string "dimensões_do_risco"
+    t.string "frequência"
+    t.string "justificativa_frequência"
+    t.string "impacto"
+    t.string "justificativa_impacto"
+    t.string "risco_inerente"
+    t.string "existe_procedimento_de_controle"
+    t.string "descrição_do_controle_existente"
+    t.boolean "eficaz"
+    t.boolean "proporcional"
+    t.boolean "razoável"
+    t.boolean "adequado"
+    t.string "fac"
+    t.string "risco_residual"
+    t.string "resposta_sugerida_ao_risco"
+    t.date "data_máxima_implantação"
+    t.bigint "processo_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["processo_id"], name: "index_riscos_on_processo_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -26,4 +107,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_023453) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "controles", "riscos"
+  add_foreign_key "planos", "controles"
+  add_foreign_key "riscos", "processos"
 end
