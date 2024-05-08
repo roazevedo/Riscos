@@ -1,0 +1,32 @@
+<div class="container my-5">
+    <%= simple_form_for @processo do |f| %>
+      <%= f.input :nome, label: 'Nome do Processo:' %>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :orgao1, label: 'Órgão Responsável 1:' %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :orgao2, label: 'Órgão Responsável 2:' %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <%= f.input :gestor_processo_1, label: 'Gestor Responsável 1:' %>
+        </div>
+        <div class="col-md-6">
+          <%= f.input :gestor_processo_2, label: 'Gestor Responsável 2:' %>
+        </div>
+      </div>
+      <%= f.input :servidor_responsavel, label: 'Servidor Responsável:' %>
+      <%= f.input :objetivo_estrategico_associado, label: 'Objetivo Estratégico Associado:' %>
+      <%= f.input :embasamento_legal, label: 'Embasamento Legal:' %>
+      <%= f.input :sistemas_utilizados, label: 'Sistemas Utilizados:' %>
+      <%= f.input :partes_interessadas, label: 'Partes Interessadas:' %>
+      
+      <% if @processo.new_record? %>
+        <%= f.button :submit, "Cadastrar", class: "btn btn-primary" %>
+      <% else %>
+        <%= f.button :submit, "Atualizar", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+  </div>

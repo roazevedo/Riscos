@@ -2,8 +2,8 @@ class CreateProcessos < ActiveRecord::Migration[7.1]
   def change
     create_table :processos do |t|
       t.string :nome
-      t.string :órgão_1
-      t.string :órgão_2
+      t.string :orgao1
+      t.string :orgao2
       t.string :gestor_processo_1
       t.string :gestor_processo_2
       t.string :servidor_responsável

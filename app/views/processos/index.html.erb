@@ -1,0 +1,47 @@
+<div class="container my-4">
+  <div class="d-flex flex-row-reverse">
+    <%= button_to raw("<i class='fa-solid fa-plus'></i>"), new_processo_path, method: :get, style: "width: 70px; cursor: pointer;", class: "btn btn-outline-secondary rounded-pill" %>
+  </div>
+  <% if @processos.any? %>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Orgão 1</th>
+          <th>Orgão 2</th>
+          <th>Gestor Processo 1</th>
+          <th>Gestor Processo 2</th>
+          <th>Servidor Responsável</th>
+          <th>Objetivo Estratégico Associado</th>
+          <th>Embasamento Legal</th>
+          <th>Sistemas Utilizados</th>
+          <th>Partes Interessadas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @processos.each do |processo| %>
+          <tr>
+            <td><%= processo.nome %></td>
+            <td><%= processo.orgao1 %></td>
+            <td><%= processo.orgao2 %></td>
+            <td><%= processo.gestor_processo_1 %></td>
+            <td><%= processo.gestor_processo_2 %></td>
+            <td><%= processo.servidor_responsavel %></td>
+            <td><%= processo.objetivo_estrategico_associado %></td>
+            <td><%= processo.embasamento_legal %></td>
+            <td><%= processo.sistemas_utilizados %></td>
+            <td><%= processo.partes_interessadas %></td>
+            <td><%= link_to raw('<i class="fa-solid fa-pen"></i>'), edit_processo_path(processo) %></td>
+            <td><%= link_to raw('<i class="fa-solid fa-trash-can"></i>'), processo_path(processo), data: {turbo_method: :delete, turbo_confirm: 'Você tem certeza?'}, class:"delete" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Nenhum processo cadastrado</h2>
+      </div>
+    </div>
+  <% end %>
+</div>
