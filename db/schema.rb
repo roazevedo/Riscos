@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_26_030146) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_08_042313) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -32,6 +32,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_030146) do
     t.bigint "risco_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "processo_id", null: false
+    t.index ["processo_id"], name: "index_controles_on_processo_id"
     t.index ["risco_id"], name: "index_controles_on_risco_id"
   end
 
@@ -48,17 +50,19 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_030146) do
     t.bigint "controle_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "processo_id", null: false
     t.index ["controle_id"], name: "index_planos_on_controle_id"
+    t.index ["processo_id"], name: "index_planos_on_processo_id"
   end
 
   create_table "processos", force: :cascade do |t|
     t.string "nome"
-    t.string "órgão_1"
-    t.string "órgão_2"
+    t.string "orgao1"
+    t.string "orgao2"
     t.string "gestor_processo_1"
     t.string "gestor_processo_2"
-    t.string "servidor_responsável"
-    t.string "objetivo_estratégico_associado"
+    t.string "servidor_responsavel"
+    t.string "objetivo_estrategico_associado"
     t.string "embasamento_legal"
     t.string "sistemas_utilizados"
     t.string "partes_interessadas"
@@ -103,11 +107,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_26_030146) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "matricula"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "controles", "processos"
   add_foreign_key "controles", "riscos"
   add_foreign_key "planos", "controles"
+  add_foreign_key "planos", "processos"
   add_foreign_key "riscos", "processos"
 end

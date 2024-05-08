@@ -1,2 +1,30 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="container d-flex border shadow p-3 mt-5" style="width: 1200px;">
+  <div class="container">
+    <h3 class="p-2">Bem-vindo ao Sistema de Controles de Riscos da Controladoria-Geral do Município do Rio de Janeiro</h3>
+    <p>Este sistema foi construído com o propósito de conhecer mais dos processos de trabalho de cada setor da CGM-RIO e dirimir os possíveis riscos atrelados a cada processo de trabalho.</p>
+  </div>
+
+  <div class="container d-flex justify-content-center p-2">
+    <%= simple_form_for(@user, url: session_path(@user)) do |f| %>
+      <div class="form-inputs">
+        <%= f.input :matricula,
+                    required: false,
+                    autofocus: true,
+                    input_html: { autocomplete: "matricula" },
+                    label: false,
+                    placeholder: "Matrícula" %>
+        <%= f.input :password,
+                    required: false,
+                    input_html: { autocomplete: "current-password" },
+                    label: false,
+                    placeholder: "Senha" %>
+        <%= f.input :remember_me, as: :boolean, label: "Lembrar-me" %>
+      </div>
+
+      <div class="form-actions">
+        <%= f.button :submit, "Login", class: "btn btn-primary" %>
+      </div>
+      <p class="my-3"><%= link_to "Primeiro acesso? Cadastre-se!", new_user_registration_path %></p>
+    <% end %>
+  </div>
+</div>
